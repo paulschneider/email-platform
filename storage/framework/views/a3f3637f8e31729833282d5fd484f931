@@ -1,0 +1,86 @@
+<?php echo $__env->make('layouts.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <h3>Lists</h3>
+    <ul>
+    	<li><a href="/v1/docs/list#get">Get List</a></li>
+    	<li><a href="/v1/docs/list#create">Create</a></li>
+    	<li><a href="/v1/docs/list#update">Update</a></li>
+    	<li><a href="/v1/docs/list#add-fields">Add Fields</a></li>
+    </ul>
+
+    <h4><a name="create">Create</a></h4>
+
+    	<dl>
+    		<dt>Endpoint</dt>
+    			<dd>/v1/list/create</dd>
+    		<dt>Method</dt>
+    			<dd>POST</dd>
+    		<dt>Required Parameters</dt>
+    			<dd>
+    				<ul>
+    					<li><strong>listName</strong> (type = string, max length= 250)</li>
+    				</ul>
+    			</dd>
+            <dt>Response Types</dt>
+                <dd>JSON</dd>
+    	</dl>
+
+    	<h5>Example Request</h5>
+
+    	<pre>
+	    	<code class="php">
+	    		$apiClient = New ApiClient();
+	    		<br />
+	    		$params = [
+	    			"listName" => "A New List Name"
+	    		];
+	    		<br />
+	    		$response = $apiClient->post('/v1/list/create', $params);	    		
+	    	</code>
+	    </pre>
+
+	    <h5>Example Success Response</h5>
+
+	    <pre>
+	    	<code class="php">
+                {
+                    "success":{ 
+                        "message":"Success.",
+                        "statusCode":200,
+                        "method":"GET",
+                        "endpoint":"\/v1\/list\/create",
+                        "time":1431092169,
+                        "data":{
+                            "listId":"9ffe76564af6841272cafeeb3765759d"
+                        }
+                    }
+                }      
+            </code>
+	    </pre>
+
+        <h5>Example Failure Response</h5>       
+
+        <pre>
+            <code class="json">
+                {
+                    "error": {
+                            "message":"The request could not be processed due to errors.",
+                            "statusCode":422,
+                            "method":"GET",
+                            "endpoint":"\/v1\/list\/create","time":1431091520,
+                            "time":1431091839
+                    },
+                    "data": {
+                            "furtherResponseCode":250,
+                            "furtherResponseMsg":"List title must be unique within a client"
+                    }
+                }
+            </code>
+        </pre>
+
+    <h4><a name="update">Update</a></h4>
+<?php $__env->stopSection(); ?> 
+
+<?php echo $__env->make('layouts.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

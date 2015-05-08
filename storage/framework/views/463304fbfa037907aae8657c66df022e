@@ -1,0 +1,12 @@
+<?php echo $__env->make('layouts.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <h3>Users</h3>
+
+    <pre>
+    	<code class="php"><?php echo 'this is some PHP' ?></code>
+    </pre>
+<?php $__env->stopSection(); ?> 
+
+<?php echo $__env->make('layouts.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

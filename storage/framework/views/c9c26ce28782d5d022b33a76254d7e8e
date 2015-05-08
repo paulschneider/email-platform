@@ -1,0 +1,4 @@
+<?php $__env->startSection('footer'); ?>
+
+
+<?php $__env->stopSection(); ?>
