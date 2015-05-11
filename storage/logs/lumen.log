@@ -1887,3 +1887,18 @@ Stack trace:
 #12 /Library/WebServer/Documents/the-agency/email-api/vendor/laravel/lumen-framework/src/Application.php(1006): Laravel\Lumen\Application->dispatch(NULL)
 #13 /Library/WebServer/Documents/the-agency/email-api/public/index.php(28): Laravel\Lumen\Application->run()
 #14 {main}  
+[2015-05-08 15:28:16] lumen.ERROR: exception 'ErrorException' with message 'Undefined index: listName' in /Library/WebServer/Documents/the-agency/email-platform/app/V1/Controllers/ListController.php:46
+Stack trace:
+#0 /Library/WebServer/Documents/the-agency/email-platform/app/V1/Controllers/ListController.php(46): Laravel\Lumen\Application->Laravel\Lumen\{closure}(8, 'Undefined index...', '/Library/WebSer...', 46, Array)
+#1 [internal function]: App\V1\Controllers\ListController->createList()
+#2 /Library/WebServer/Documents/the-agency/email-platform/vendor/illuminate/container/Container.php(523): call_user_func_array(Array, Array)
+#3 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1253): Illuminate\Container\Container->call(Array, Array)
+#4 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1218): Laravel\Lumen\Application->callControllerCallable(Array, Array)
+#5 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1189): Laravel\Lumen\Application->callLumenController(Object(App\V1\Controllers\ListController), 'createList', Array)
+#6 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1157): Laravel\Lumen\Application->callControllerAction(Array)
+#7 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1142): Laravel\Lumen\Application->callActionOnArrayBasedRoute(Array)
+#8 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1120): Laravel\Lumen\Application->handleArrayBasedFoundRoute(Array)
+#9 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1058): Laravel\Lumen\Application->handleFoundRoute(Array)
+#10 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1006): Laravel\Lumen\Application->dispatch(NULL)
+#11 /Library/WebServer/Documents/the-agency/email-platform/public/index.php(28): Laravel\Lumen\Application->run()
+#12 {main}  
