@@ -9,20 +9,34 @@ Class ListController extends Controller {
 	 * @return [type]         [description]
 	 */
 	public function getList($listId) {
-		return response()->json($this->mailer->getList($listId)->response);
+		return response()->json($this->mailer->getList($listId));
 	}
 
 	/**
 	 * add an array of fields to a specified list
 	 */
 	public function addCustomFields() {
-		$result = $this->mailer->addCustomField('839d9404eaf941b9b1e89afc3e103bf6', [
-			"FieldName" => "DOB",
-			"DataType" => "Text",
-			"VisibleInPreferenceCenter" => true,
-		]);
+		//$logger = app('Psr\Log\LoggerInterface')->info(json_encode($_POST));
 
-		return apiSuccessResponse('ok', $result);
+		# check to make sure we have everything we need to proceed. Error if not
+		if (!isset($_POST['listId']) or !isset($_POST['fields']) or !is_array($_POST['fields'])) {
+			return apiErrorResponse('badRequest');
+		}
+
+		$listId = $_POST['listId'];
+		$fields = $_POST['fields'];
+
+		# make sure supplied list ID is a valid list
+		if (!$this->mailer->getList($listId)) {
+			return apiErrorResponse('unprocessable', ['errors' => 'Unknown list ID']);
+		}
+
+		# add the fields to the list
+		if ($result = $this->mailer->addCustomFields($listId, $fields)) {
+			return apiSuccessResponse('ok', $result);
+		}
+
+		return apiErrorResponse('unprocessable', $result);
 	}
 
 	/**
@@ -57,5 +71,23 @@ Class ListController extends Controller {
 			'furtherResponseCode' => $result->response->Code,
 			'furtherResponseMsg' => $result->response->Message,
 		]);
+	}
+
+	/**
+	 * action on an UPDATE call to the resource
+	 *
+	 * @return ApiController Response
+	 */
+	public function update() {
+		return ApiController::respondNotAllowed();
+	}
+
+	/**
+	 * action on an UPDATE call to the resource
+	 *
+	 * @return ApiController Response
+	 */
+	public function destroy() {
+		return ApiController::respondNotAllowed();
 	}
 }

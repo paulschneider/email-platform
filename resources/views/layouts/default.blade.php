@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="">
-    <head>    
+    <head>
         <title>API Documentation</title>
 
         <meta charset="utf-8" />
@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="" />
 
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">    
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css" />
+        <link rel="stylesheet" href="/css/content.css" />
     </head>
 
     <body>
@@ -26,5 +27,5 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    
+
 </html>

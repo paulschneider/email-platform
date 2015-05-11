@@ -1,0 +1,37 @@
+ body {
+    width: 80%;
+    margin: 0 auto;
+    font-family:monaco;
+}
+h2, h3, h4, h5, h6 {
+    width: 100%;
+    padding-bottom:5px;
+    border-bottom:1px solid #000;
+    margin-bottom: 20px;
+    font-size:1.3em;
+}
+dl {
+    width: 100%;
+    float: left;
+    clear:both;
+}
+
+dt, dd {
+    float:left;
+    margin-bottom:20px;
+}
+
+dt {
+    width: 30%;
+    clear:both;
+}
+
+dd ul {
+    list-style-position: outside;
+    padding:0;
+    margin:0;
+}
+
+dd li {
+    list-style:none;
+}

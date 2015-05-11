@@ -1,13 +1,11 @@
 <?php Namespace App\V1\Mailers;
 
-require_once 'CampaignMonitor/Classes/csrest_general.php';	
+require_once 'CampaignMonitor/Classes/csrest_general.php';
 
-Use App\V1\Interfaces\EmailerInterface;
-Use App\V1\Mailers\CampaignMonitor\Lists AS SubscriberList;
-Use App\V1\Mailers\CampaignMonitor\User AS UserMailer;
+use App\V1\Interfaces\EmailerInterface;
+use App\V1\Mailers\CampaignMonitor\Lister;
 
-Class CampaignMonitor implements EmailerInterface
-{	
+Class CampaignMonitor implements EmailerInterface {
 	/**
 	 * the base URL to use for all MailChimp request
 	 * @var string baseUrl
@@ -29,18 +27,16 @@ Class CampaignMonitor implements EmailerInterface
 	/**
 	 * Class constructor
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		# define the base URL for the class
-		$this->baseUrl = getenv('CMAPIKEY');
+		$this->baseUrl = getenv('CMAPIPATH');
 	}
 
 	/**
 	 * return the base URL to use for this MailChimp integration
 	 * @return string baseUrl
 	 */
-	public function getBaseUrl()
-	{
+	public function getBaseUrl() {
 		return $this->baseUrl();
 	}
 
@@ -50,9 +46,8 @@ Class CampaignMonitor implements EmailerInterface
 	 * @param  [type] $listName [description]
 	 * @return [type]           [description]
 	 */
-	public function subscribe($listId, $data)
-	{
-		$user = New UserMailer($this);
+	public function subscribe($listId, $data) {
+		$user = New User($this);
 		return $user->subscribe($listId, $data);
 	}
 
@@ -60,18 +55,16 @@ Class CampaignMonitor implements EmailerInterface
 	 * [updateSubscriber description]
 	 * @return [type] [description]
 	 */
-	public function updateSubscriber($listId, $data)
-	{
-		$user = New UserMailer($this);
+	public function updateSubscriber($listId, $data) {
+		$user = New User($this);
 		return $user->updateSubscriber($listId, $data);
 	}
 
 	/**
 	 * add an array of form fields to a specified Mailchimp form
 	 */
-	public function addFieldsToList($listName, $fields = [])
-	{
-		$lister = New SubscriberList();
+	public function addFieldsToList($listName, $fields = []) {
+		$lister = New Lister($this);
 		return $lister->addListFields($listName, $fields);
 	}
 
@@ -80,29 +73,28 @@ Class CampaignMonitor implements EmailerInterface
 	 * @param string $listName the name of the list to create
 	 * @return [type] [description]
 	 */
-	public function createList($listName)
-	{
-		$lister = New SubscriberList($this);
+	public function createList($listName) {
+		$lister = New Lister($this);
 
 		$params = [
 			"Title" => $listName,
-    		"UnsubscribePage" => "http://www.example.com/unsubscribed.html",
-    		"UnsubscribeSetting" => "OnlyThisList",
-    		"ConfirmedOptIn" => false,
-    		"ConfirmationSuccessPage" => "http://www.example.com/joined.html"
+			"UnsubscribePage" => "http://www.example.com/unsubscribed.html",
+			"UnsubscribeSetting" => "OnlyThisList",
+			"ConfirmedOptIn" => false,
+			"ConfirmationSuccessPage" => "http://www.example.com/joined.html",
 		];
 
-		return $lister->create($params, $this->clientId);		
+		return $lister->create($params, $this->clientId);
 	}
 
 	/**
-	 * [addCustomField description]
-	 * @param [type] $params [description]
+	 * add one or more custom fields to an existing list
+	 * @param string $listId unique identifier for the list
+	 * @param array $fields an array of field names to add to the list
 	 */
-	public function addCustomField($listId, $params)
-	{
-		$lister = New SubscriberList($this);
-		return $lister->addCustomField($listId, $params);
+	public function addCustomFields($listId, $fields) {
+		$lister = New Lister($this);
+		return $lister->addCustomFields($listId, $fields);
 	}
 
 	/**
@@ -110,9 +102,8 @@ Class CampaignMonitor implements EmailerInterface
 	 * @param  [type] $listId [description]
 	 * @return [type]         [description]
 	 */
-	public function getList($listId)
-	{
-		$lister = New SubscriberList($this);
+	public function getList($listId) {
+		$lister = New Lister($this);
 		return $lister->getList($listId);
 	}
 }
