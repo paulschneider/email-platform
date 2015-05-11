@@ -45,7 +45,7 @@ Class ListController extends Controller {
 		}
 
 		# make the call to create the form
-		$result = $this->mailer->createList($listName);
+		$result = $this->mailer->createList($_POST['listName']);
 
 		# if we get a successful response back from the Mail API
 		if ($result->http_status_code == 201) {
