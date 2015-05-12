@@ -6,7 +6,7 @@ Class DocController extends Controller {
 	 * @return [type] [description]
 	 */
 	public function home() {
-		return View("docs.v1.Home");
+		return View("docs.v1.home");
 	}
 
 	/**
