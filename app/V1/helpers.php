@@ -7,7 +7,7 @@ function apiErrorResponse($response, $data = []) {
 	return $responder->setStatusCode($response['code'])->respondWithError($response['message'], $data);
 }
 
-function apiSuccessResponse($response, $data) {
+function apiSuccessResponse($response, $data = []) {
 	$responder = New App\V1\Lib\ApiResponder();
 	$response = config('responsecodes')[$response];
 

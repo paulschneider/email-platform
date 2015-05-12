@@ -26,6 +26,10 @@ dt {
     clear:both;
 }
 
+dd {
+    width: 66%;
+}
+
 dd ul {
     list-style-position: outside;
     padding:0;
@@ -34,4 +38,9 @@ dd ul {
 
 dd li {
     list-style:none;
+    margin-bottom:20px;
+}
+
+span.define {
+    color:#A8A8A8;
 }

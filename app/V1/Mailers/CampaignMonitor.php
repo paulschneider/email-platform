@@ -4,6 +4,7 @@ require_once 'CampaignMonitor/Classes/csrest_general.php';
 
 use App\V1\Interfaces\EmailerInterface;
 use App\V1\Mailers\CampaignMonitor\Lister;
+use App\V1\Mailers\CampaignMonitor\User;
 
 Class CampaignMonitor implements EmailerInterface {
 	/**
@@ -41,14 +42,21 @@ Class CampaignMonitor implements EmailerInterface {
 	}
 
 	/**
-	 * register a new subscriber to a mailing list
-	 * @param  [type] $email    [description]
-	 * @param  [type] $listName [description]
-	 * @return [type]           [description]
+	 * register a single user to a specified list
+	 * @param string $listId the unique identifier for the list to subscribe the user to
+	 * @param string $userEmail The email address of the user to subscribe
+	 * * @param string $userName The full name of the user to subscribe
+	 * @param array $fields a list of question identifiers and answers given by the user
+	 * @return mixed
 	 */
-	public function subscribe($listId, $data) {
-		$user = New User($this);
-		return $user->subscribe($listId, $data);
+	public function subscribe($listId, $userEmail, $userName, $fields) {
+		$user = New User($this, $listId);
+
+		if (!$user->subscribe($userEmail, $userName, $fields)) {
+			return apiErrorResponse('unprocessable', ['errors' => $user->getError()]);
+		}
+
+		return apiSuccessResponse('ok');
 	}
 
 	/**
@@ -58,14 +66,6 @@ Class CampaignMonitor implements EmailerInterface {
 	public function updateSubscriber($listId, $data) {
 		$user = New User($this);
 		return $user->updateSubscriber($listId, $data);
-	}
-
-	/**
-	 * add an array of form fields to a specified Mailchimp form
-	 */
-	public function addFieldsToList($listName, $fields = []) {
-		$lister = New Lister($this);
-		return $lister->addListFields($listName, $fields);
 	}
 
 	/**
@@ -98,12 +98,17 @@ Class CampaignMonitor implements EmailerInterface {
 	}
 
 	/**
-	 * [getList description]
-	 * @param  [type] $listId [description]
-	 * @return [type]         [description]
+	 * retrieve the base details of an existing list
+	 * @param  string $listId unique list identifier
+	 * @return mixed
 	 */
 	public function getList($listId) {
 		$lister = New Lister($this);
-		return $lister->getList($listId);
+
+		if (!$result = $lister->getList($listId)) {
+			return apiErrorResponse('notFound', ['errors' => $lister->getError()]);
+		}
+
+		return apiSuccessResponse('ok', $result);
 	}
 }

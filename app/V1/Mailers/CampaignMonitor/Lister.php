@@ -2,7 +2,7 @@
 
 require_once 'Classes/csrest_lists.php';
 
-Class Lister {
+Class Lister extends Campaigner {
 
 	/**
 	 * CampaignMonitor instance
@@ -54,19 +54,19 @@ Class Lister {
 		if (is_array($fields)) {
 			foreach ($fields AS $field) {
 				$item = [
-					"FieldName" => $field,
+					"FieldName" => substr(ucwords(strtolower($field)), 0, 30),
 					"DataType" => "Text",
 					"VisibleInPreferenceCenter" => true,
 				];
 
 				$result = $list->create_custom_field($item);
-
 				$responseCode = $result->http_status_code;
 
 				if ($responseCode == 201) {
 					$results['created'][] = [
-						'fieldName' => $field,
-						'message' => 'success',
+						"fieldName" => $field,
+						"fieldTag" => $result->response,
+						"message" => "success",
 					];
 				} else {
 					$results['errors'][] = [
@@ -88,10 +88,14 @@ Class Lister {
 		$list = New \CS_REST_Lists($listId, $this->auth);
 		$result = $list->get();
 
-		if ($result->http_status_code == 401) {
+		if ($result->http_status_code != 200) {
+			$this->error = $result->response->Message;
 			return false;
 		}
 
-		return $result->response;
+		return [
+			"id" => $result->response->ListID,
+			"title" => $result->response->Title,
+		];
 	}
 }
