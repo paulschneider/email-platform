@@ -1,0 +1,9 @@
+@section('header')
+    <h2>API Documentation Version 1</h2>
+
+    <ul>
+        <li><a href="/v1/docs/user">Users</a></li>
+        <li><a href="/v1/docs/list">Lists</a></li>
+    </ul>
+
+@endsection
