@@ -40,8 +40,17 @@ Class ListController extends Controller {
 	}
 
 	/**
-	 * [createList description]
-	 * @return [type] [description]
+	 * retrieve a set of custom fields assigned to a list
+	 * @param string $listId Unique identifier for the list to retrieve
+	 * @return mixed
+	 */
+	public function getCustomFields($listId) {
+		return $this->mailer->getCustomFields($listId);
+	}
+
+	/**
+	 * create a new list
+	 * @return mixed
 	 */
 	public function createList() {
 

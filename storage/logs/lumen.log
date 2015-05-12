@@ -89,3 +89,21 @@ Stack trace:
 #13 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1006): Laravel\Lumen\Application->dispatch(NULL)
 #14 /Library/WebServer/Documents/the-agency/email-platform/public/index.php(28): Laravel\Lumen\Application->run()
 #15 {main}  
+[2015-05-12 13:35:09] lumen.ERROR: exception 'ErrorException' with message 'Missing argument 1 for App\V1\Mailers\CampaignMonitor\Lister::getListFields(), called in /Library/WebServer/Documents/the-agency/email-platform/app/V1/Mailers/CampaignMonitor.php on line 123 and defined' in /Library/WebServer/Documents/the-agency/email-platform/app/V1/Mailers/CampaignMonitor/Lister.php:111
+Stack trace:
+#0 /Library/WebServer/Documents/the-agency/email-platform/app/V1/Mailers/CampaignMonitor/Lister.php(111): Laravel\Lumen\Application->Laravel\Lumen\{closure}(2, 'Missing argumen...', '/Library/WebSer...', 111, Array)
+#1 /Library/WebServer/Documents/the-agency/email-platform/app/V1/Mailers/CampaignMonitor.php(123): App\V1\Mailers\CampaignMonitor\Lister->getListFields()
+#2 /Library/WebServer/Documents/the-agency/email-platform/app/V1/Controllers/ListController.php(48): App\V1\Mailers\CampaignMonitor->getCustomFields('5d0f2b931098f33...')
+#3 [internal function]: App\V1\Controllers\ListController->getCustomFields('5d0f2b931098f33...')
+#4 /Library/WebServer/Documents/the-agency/email-platform/vendor/illuminate/container/Container.php(523): call_user_func_array(Array, Array)
+#5 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1253): Illuminate\Container\Container->call(Array, Array)
+#6 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1218): Laravel\Lumen\Application->callControllerCallable(Array, Array)
+#7 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1189): Laravel\Lumen\Application->callLumenController(Object(App\V1\Controllers\ListController), 'getCustomFields', Array)
+#8 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1157): Laravel\Lumen\Application->callControllerAction(Array)
+#9 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1142): Laravel\Lumen\Application->callActionOnArrayBasedRoute(Array)
+#10 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1120): Laravel\Lumen\Application->handleArrayBasedFoundRoute(Array)
+#11 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1099): Laravel\Lumen\Application->handleFoundRoute(Array)
+#12 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1063): Laravel\Lumen\Application->handleDispatcherResponse(Array)
+#13 /Library/WebServer/Documents/the-agency/email-platform/vendor/laravel/lumen-framework/src/Application.php(1006): Laravel\Lumen\Application->dispatch(NULL)
+#14 /Library/WebServer/Documents/the-agency/email-platform/public/index.php(28): Laravel\Lumen\Application->run()
+#15 {main}  

@@ -8,6 +8,7 @@
     	<li><a href="/v1/docs/list#get">Get a List</a></li>
     	<li><a href="/v1/docs/list#create">Create a New List</a></li>
     	<li><a href="/v1/docs/list#add-fields">Add Fields to Existing List</a></li>
+        <li><a href="/v1/docs/list#get-fields">Retrieve Fields from an Existing List</a></li>
     </ul>
 
     <!-- GET A LIST -->
@@ -36,10 +37,6 @@
             <pre>
                 <code class="php">
                     $apiClient = New ApiClient();
-                    <br />
-                    $params = [
-                        "listName" => "A New List Name"
-                    ];
                     <br />
                     $response = $apiClient->get('/v1/list/find/9ffe76564af6841272cafeeb3765759d');
                 </code>
@@ -320,6 +317,115 @@
             </code>
         </pre>
     </div>
+
+    <!-- ADD FIELDS TO A LIST -->
+    <div id="get-fields">
+        <h4><a name="get-fields">Retrieve Fields from an Existing List</a></h4>
+
+        <dl>
+            <dt>Description</dt>
+                <dd>Retrieve a set of form fields attached to a specified list.</dd>
+            <dt>Endpoint</dt>
+                <dd>list/fields/{listId}</dd>
+            <dt>Method</dt>
+                <dd>GET</dd>
+            <dt>Required Parameters</dt>
+                <dd>
+                    <ul>
+                        <li><strong>listId</strong> (type = string) - Unique identifier for the list</li>
+                    </ul>
+                </dd>
+            <dt>Available Response Types</dt>
+                <dd>JSON</dd>
+        </dl>
+
+        <h5>Example Request</h5>
+
+        <pre>
+            <code class="php">
+                $apiClient = New ApiClient();
+                <br />
+                $response = $apiClient->get('/v1/list/fields/9ffe76564af6841272cafeeb3765759d');
+            </code>
+        </pre>
+
+        <h5>Example Success Response</h5>
+
+        <pre>
+            <code class="php">
+            {
+              "success": {
+                "message": "Success.",
+                "statusCode": 200,
+                "method": "GET",
+                "endpoint": "/v1/list/custom-fields/5d0f2b931098f3314d1488b871107316",
+                "time": 1431440440,
+                "data": [
+                  {
+                    "fieldName": "Surname",
+                    "fieldTag": "[Surname]"
+                  },
+                  {
+                    "fieldName": "Telephone",
+                    "fieldTag": "[Telephone]"
+                  },
+                  {
+                    "fieldName": "Date Of Birth",
+                    "fieldTag": "[DateOfBirth]"
+                  },
+                  {
+                    "fieldName": "Gender",
+                    "fieldTag": "[Gender]"
+                  },
+                  {
+                    "fieldName": "County \/ City",
+                    "fieldTag": "[County\/City]"
+                  },
+                  {
+                    "fieldName": "Weight",
+                    "fieldTag": "[Weight]"
+                  },
+                  {
+                    "fieldName": "Height",
+                    "fieldTag": "[Height]"
+                  },
+                  {
+                    "fieldName": "Your Bmi",
+                    "fieldTag": "[YourBmi]"
+                  },
+                  {
+                    "fieldName": "Are You A Smoker?",
+                    "fieldTag": "[AreYouASmoker?]"
+                  },
+                  {
+                    "fieldName": "I Give My Permission To Be Con",
+                    "fieldTag": "[IGiveMyPermissionToBeCon]"
+                  }
+                ]
+              }
+            }
+            </code>
+        </pre>
+
+        <h5>Example Failure Response</h5>
+
+        <pre>
+            <code class="php">
+                {
+                  "error": {
+                    "message": "The requested content item or resource could not be found.",
+                    "statusCode": 404,
+                    "method": "GET",
+                    "endpoint": "/v1/list/fields/5d0f2b931098f3314d1488b871107316-X",
+                    "time": 1431440781
+                  },
+                  "data": {
+                    "errors": "Invalid ListID"
+                  }
+                }
+            </code>
+        </pre>
+   </div>
 @endsection
 
 @include('layouts.footer')

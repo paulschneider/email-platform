@@ -23,12 +23,20 @@ Class Lister extends Campaigner {
 	protected $auth;
 
 	/**
+	 * CS_REST_Lists
+	 * @var $list
+	 */
+	protected $list;
+
+	/**
 	 * class constructor
 	 * @param CampaignMonitor $monitor CampaignMonitor instance
 	 */
-	public function __construct($monitor) {
+	public function __construct($monitor, $listId) {
 		$this->monitor = $monitor;
 		$this->auth = ['api_key' => getenv('CMAPIKEY')];
+
+		$this->list = New \CS_REST_Lists($listId, $this->auth);
 	}
 
 	/**
@@ -37,19 +45,16 @@ Class Lister extends Campaigner {
 	 * @return null
 	 */
 	public function create(array $params) {
-		$list = New \CS_REST_Lists('', $this->auth);
-		return $list->create($this->monitor->clientId, $params);
+		return $this->list->create($this->monitor->clientId, $params);
 	}
 
 	/**
-	 * [addCustomFields description]
-	 * @param [type] $listId [description]
-	 * @param [type] $fields [description]
+	 * add a set of custom fields to a specified list
+	 * @param array $fields a list of field names to add
 	 */
-	public function addCustomFields($listId, $fields = []) {
+	public function addCustomFields($fields = []) {
 
 		$items = $results = [];
-		$list = New \CS_REST_Lists($listId, $this->auth);
 
 		if (is_array($fields)) {
 			foreach ($fields AS $field) {
@@ -59,7 +64,7 @@ Class Lister extends Campaigner {
 					"VisibleInPreferenceCenter" => true,
 				];
 
-				$result = $list->create_custom_field($item);
+				$result = $this->list->create_custom_field($item);
 				$responseCode = $result->http_status_code;
 
 				if ($responseCode == 201) {
@@ -81,12 +86,11 @@ Class Lister extends Campaigner {
 	}
 
 	/**
-	 * [getAllLists description]
-	 * @return [type] [description]
+	 * retrieve a specified list. Note that the list ID is passed to this class's constructor, not to this method
+	 * @return mixed
 	 */
-	public function getList($listId) {
-		$list = New \CS_REST_Lists($listId, $this->auth);
-		$result = $list->get();
+	public function getList() {
+		$result = $this->list->get();
 
 		if ($result->http_status_code != 200) {
 			$this->error = $result->response->Message;
@@ -97,5 +101,31 @@ Class Lister extends Campaigner {
 			"id" => $result->response->ListID,
 			"title" => $result->response->Title,
 		];
+	}
+
+	/**
+	 * retrieve a list of fields assigned to a specified List ID.
+	 * Note that the list ID is passed to this class's constructor, not to this method
+	 * @param  string $listId unique identifier for the list
+	 * @return mixed
+	 */
+	public function getListFields() {
+
+		$result = $this->list->get_custom_fields();
+
+		if ($result->http_status_code != 200) {
+			$this->error = $result->response->Message;
+			return false;
+		}
+
+		$data = [];
+		foreach ($result->response AS $field) {
+			$data[] = [
+				'fieldName' => $field->FieldName,
+				'fieldTag' => $field->Key,
+			];
+		}
+
+		return $data;
 	}
 }

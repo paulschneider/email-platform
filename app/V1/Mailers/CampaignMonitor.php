@@ -64,8 +64,8 @@ Class CampaignMonitor implements EmailerInterface {
 	 * @return [type] [description]
 	 */
 	public function updateSubscriber($listId, $data) {
-		$user = New User($this);
-		return $user->updateSubscriber($listId, $data);
+		$user = New User($this, $listId);
+		return $user->updateSubscriber($data);
 	}
 
 	/**
@@ -74,7 +74,7 @@ Class CampaignMonitor implements EmailerInterface {
 	 * @return [type] [description]
 	 */
 	public function createList($listName) {
-		$lister = New Lister($this);
+		$lister = New Lister($this, "");
 
 		$params = [
 			"Title" => $listName,
@@ -93,8 +93,8 @@ Class CampaignMonitor implements EmailerInterface {
 	 * @param array $fields an array of field names to add to the list
 	 */
 	public function addCustomFields($listId, $fields) {
-		$lister = New Lister($this);
-		return $lister->addCustomFields($listId, $fields);
+		$lister = New Lister($this, $listId);
+		return $lister->addCustomFields($fields);
 	}
 
 	/**
@@ -102,10 +102,25 @@ Class CampaignMonitor implements EmailerInterface {
 	 * @param  string $listId unique list identifier
 	 * @return mixed
 	 */
-	public function getList($listId) {
-		$lister = New Lister($this);
+	public function getList() {
+		$lister = New Lister($this, $listId);
 
-		if (!$result = $lister->getList($listId)) {
+		if (!$result = $lister->getList()) {
+			return apiErrorResponse('notFound', ['errors' => $lister->getError()]);
+		}
+
+		return apiSuccessResponse('ok', $result);
+	}
+
+	/**
+	 * retrieve a set of custom fields assigned to a specified list
+	 * @param  string $listId unique list identifier
+	 * @return mixed
+	 */
+	public function getCustomFields($listId) {
+		$lister = New Lister($this, $listId);
+
+		if (!$result = $lister->getListFields()) {
 			return apiErrorResponse('notFound', ['errors' => $lister->getError()]);
 		}
 

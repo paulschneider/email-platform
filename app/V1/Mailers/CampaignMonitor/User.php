@@ -78,8 +78,7 @@ Class User extends Campaigner {
 	 * @param  [type] $data   [description]
 	 * @return [type]         [description]
 	 */
-	public function updateSubscriber($listId, $emailAddress, $data) {
-		$subscriber = New \CS_REST_Subscribers($listId, $this->auth);
-		return $subscriber->update($emailAddress, $data);
+	public function updateSubscriber($emailAddress, $data) {
+		return $this->subscriber->update($emailAddress, $data);
 	}
 }
