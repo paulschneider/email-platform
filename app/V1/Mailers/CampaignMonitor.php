@@ -45,7 +45,7 @@ Class CampaignMonitor implements EmailerInterface {
 	 * register a single user to a specified list
 	 * @param string $listId the unique identifier for the list to subscribe the user to
 	 * @param string $userEmail The email address of the user to subscribe
-	 * * @param string $userName The full name of the user to subscribe
+	 * @param string $userName The full name of the user to subscribe
 	 * @param array $fields a list of question identifiers and answers given by the user
 	 * @return mixed
 	 */
@@ -57,6 +57,24 @@ Class CampaignMonitor implements EmailerInterface {
 		}
 
 		return apiSuccessResponse('ok');
+	}
+
+	/**
+	 * register a single user to a specified list. This does not return the usual API response
+	 * @param string $listId the unique identifier for the list to subscribe the user to
+	 * @param string $userEmail The email address of the user to subscribe
+	 * @param string $userName The full name of the user to subscribe
+	 * @param array $fields a list of question identifiers and answers given by the user
+	 * @return mixed
+	 */
+	public function processSubscribe($listId, $userEmail, $userName, $fields) {
+		$user = New User($this, $listId);
+
+		if (!$user->subscribe($userEmail, $userName, $fields)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -102,7 +120,7 @@ Class CampaignMonitor implements EmailerInterface {
 	 * @param  string $listId unique list identifier
 	 * @return mixed
 	 */
-	public function getList() {
+	public function getList($listId) {
 		$lister = New Lister($this, $listId);
 
 		if (!$result = $lister->getList()) {

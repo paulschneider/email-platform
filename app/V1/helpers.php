@@ -1,5 +1,9 @@
 <?php
 
+function getDateTime() {
+	return date('Y-m:d H:i:s');
+}
+
 function apiErrorResponse($response, $data = []) {
 	$responder = New App\V1\Lib\ApiResponder();
 	$response = config('responsecodes')[$response];

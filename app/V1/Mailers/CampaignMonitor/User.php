@@ -36,13 +36,14 @@ Class User extends Campaigner {
 	 * @return mixed
 	 */
 	public function subscribe($userEmail, $userName, $fields) {
+
 		# make sure we have an array to work with
 		if (is_array($fields)) {
 			# the base details as required by Campaign Monitor
 			$data = [
 				"EmailAddress" => $userEmail,
 				"Name" => $userName,
-				"Resubscribe" => true,
+				//"Resubscribe" => true,
 			];
 
 			$customFields = [];

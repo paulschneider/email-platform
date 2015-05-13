@@ -13,11 +13,11 @@
 $app->get('v1/docs', "\App\V1\Controllers\DocController@home");
 $app->get('v1/docs/{page}', "\App\V1\Controllers\DocController@show");
 
+$app->get('v1/process', "\App\V1\Controllers\UtilsController@process");
 /**
  * users
  */
 $app->post('v1/user/subscribe', "\App\V1\Controllers\UserController@subscribe");
-$app->post('v1/user/update', "\App\V1\Controllers\UserController@subscribe");
 
 /**
  * lists

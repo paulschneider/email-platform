@@ -5,8 +5,7 @@ Class UserController extends Controller {
 	 * Request an individual user be subscribed to the email list
 	 * @return mixed
 	 */
-	public function subscribe() {
-		$logger = app('Psr\Log\LoggerInterface')->info(json_encode($_POST));
+	public function subscribe(\App\V1\Lib\MailLogger $logger) {
 
 		if (!isset($_POST['listId']) or !isset($_POST['userEmail']) or !isset($_POST['fields']) or !isset($_POST['userName'])) {
 			return apiErrorResponse('badRequest');
@@ -23,29 +22,14 @@ Class UserController extends Controller {
 		$userName = $_POST['userName'];
 		$fields = $_POST['fields'];
 
+		# log the subscription request which we'll try and action later on
+		$response = $logger->log($userEmail, $userName, $fields, $listId);
+
+		//$logger = app('Psr\Log\LoggerInterface')->info("*** We returned a response from the API" . time() . "***");
+
+		return $response;
+
 		# try and register the users' answers to the provided list
-		return $this->mailer->subscribe($listId, $userEmail, $userName, $fields);
-	}
-
-	/**
-	 * [updateSubscriber description]
-	 * @return [type] [description]
-	 */
-	public function updateSubscriber() {
-		$this->mailer->updateSubscriber("839d9404eaf941b9b1e89afc3e103bf6", "pschneider@theagencyonline.co.uk", [
-			"CustomFields" => [
-				"DOB" => "1980/03/25",
-			],
-		]);
-
-		return response()->json($result);
-	}
-
-	/**
-	 * Request an individual user be unsubscribed from the email list
-	 * @return [type] [description]
-	 */
-	public function unsubscribe() {
-
+		//return $this->mailer->subscribe($listId, $userEmail, $userName, $fields);
 	}
 }
