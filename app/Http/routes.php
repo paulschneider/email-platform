@@ -27,8 +27,8 @@ $app->post('v1/list/add-fields', "\App\V1\Controllers\ListController@addCustomFi
 $app->get('v1/list/fields/{listId}', "\App\V1\Controllers\ListController@getCustomFields");
 $app->get('v1/list/find/{listId}', "\App\V1\Controllers\ListController@getList");
 $app->get('v1/list/all', "\App\V1\Controllers\ListController@getAll");
-$app->delete('v1/list/{listId}', "\App\V1\Controllers\ListController@deleteList");
 $app->delete('v1/list/all', "\App\V1\Controllers\ListController@deleteAllLists");
+$app->delete('v1/list/{listId}', "\App\V1\Controllers\ListController@deleteList");
 
 /**
  * utilities
