@@ -15,7 +15,7 @@
 
     <!-- GET A LIST -->
     <div id="get-a-list">
-        <h4><a name="get">Get a specified List</a></h4>
+        <h4><a name="get">Retrieve a specified List</a></h4>
 
         <dl>
             <dt>Description</dt>
