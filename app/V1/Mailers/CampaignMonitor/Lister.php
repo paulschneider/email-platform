@@ -128,4 +128,12 @@ Class Lister extends Campaigner {
 
 		return $data;
 	}
+
+	/**
+	 * delete a list from the client
+	 * @return mixed
+	 */
+	public function deleteList() {
+		return $this->list->delete();
+	}
 }

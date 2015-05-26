@@ -3,6 +3,7 @@
 require_once 'CampaignMonitor/Classes/csrest_general.php';
 
 use App\V1\Interfaces\EmailerInterface;
+use App\V1\Mailers\CampaignMonitor\Client;
 use App\V1\Mailers\CampaignMonitor\Lister;
 use App\V1\Mailers\CampaignMonitor\User;
 
@@ -18,6 +19,14 @@ Class CampaignMonitor implements EmailerInterface {
 	 * @var instance of the MailChimp API library class
 	 */
 	protected $mailer;
+
+	/**
+	 * list identifiers protected from API request actions
+	 * @var array $protected
+	 */
+	protected $protected = [
+		"5d0f2b931098f3314d1488b871107316",
+	];
 
 	/**
 	 * [$clientId description]
@@ -116,6 +125,21 @@ Class CampaignMonitor implements EmailerInterface {
 	}
 
 	/**
+	 * check to see whether a given list ID is a valid list
+	 * @param  string  $listId  unique identifier for the list
+	 * @return boolean
+	 */
+	public function isValidList($listId) {
+		$lister = New Lister($this, $listId);
+
+		if (!$lister->getList()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * retrieve the base details of an existing list
 	 * @param  string $listId unique list identifier
 	 * @return mixed
@@ -131,6 +155,26 @@ Class CampaignMonitor implements EmailerInterface {
 	}
 
 	/**
+	 * return an list of all client lists
+	 * @return mixed
+	 */
+	public function getAllLists() {
+		$client = New Client($this);
+		$result = $client->getLists();
+
+		if ($result->http_status_code != 200) {
+			return apiErrorResponse('notFound', ['errors' => $result->response]);
+		}
+
+		$data = [
+			"count" => count($result->response),
+			"lists" => $result->response,
+		];
+
+		return apiSuccessResponse('ok', $data);
+	}
+
+	/**
 	 * retrieve a set of custom fields assigned to a specified list
 	 * @param  string $listId unique list identifier
 	 * @return mixed
@@ -143,5 +187,49 @@ Class CampaignMonitor implements EmailerInterface {
 		}
 
 		return apiSuccessResponse('ok', $result);
+	}
+
+	/**
+	 * delete a specified list from the system
+	 * @param  string $listId unique identifier for the list
+	 * @return mixed
+	 */
+	public function deleteList($listId) {
+		$lister = New Lister($this, $listId);
+
+		$result = $lister->deleteList();
+
+		if (isProtected($listId)) {
+			return apiErrorResponse('forbidden', ['errors' => "Removal of list not allowed."]);
+		}
+
+		return apiSuccessResponse('ok', $result);
+	}
+
+	/**
+	 * delete all non-standard lists from the client
+	 * @return mixed
+	 */
+	public function deleteAllLists() {
+		$client = New Client($this);
+		$result = $client->getLists();
+
+		if ($result->http_status_code != 200) {
+			return apiErrorResponse('notFound', ['errors' => $result->response]);
+		}
+
+		$ids = [];
+		$counter = 0;
+
+		foreach ($result->response AS $item) {
+			$listId = $item->ListID;
+
+			if (!isProtected($item->ListID)) {
+				(New Lister($this, $listId))->deleteList();
+				$counter++;
+			}
+		}
+
+		return apiSuccessResponse('ok', ["listsDeleted" => $counter]);
 	}
 }

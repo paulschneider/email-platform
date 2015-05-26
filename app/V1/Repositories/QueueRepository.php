@@ -12,14 +12,14 @@ Class QueueRepository extends Db {
 	protected $table = "request";
 
 	/**
-	 * [$mailer description]
-	 * @var [type]
+	 * \App\V1\Interfaces\EmailerInterface
+	 * @var $mailer
 	 */
 	protected $mailer;
 
 	/**
-	 * [__construct description]
-	 * @param \App\V1\Interfaces\EmailerInterface $mailer [description]
+	 * class constructor
+	 * @param \App\V1\Interfaces\EmailerInterface $mailer
 	 */
 	public function __construct(\App\V1\Interfaces\EmailerInterface $mailer) {
 		$this->mailer = $mailer;
@@ -95,6 +95,7 @@ Class QueueRepository extends Db {
 		# if this was the final attempt
 		if ($attempt == 3) {
 			$data['failed_all_attempts'] = true;
+			$this->notifyAllFailed();
 		}
 
 		# update the database to reflect the attempt
@@ -110,5 +111,13 @@ Class QueueRepository extends Db {
 	 */
 	private function requeue() {
 		Queue::later(Carbon::now()->addMinutes(5), new \App\V1\Jobs\ProcessQueue(new \App\V1\Repositories\QueueRepository));
+	}
+
+	/**
+	 * notify system administrators that all subscription attempts have failed
+	 * @return null
+	 */
+	private function notifyAllFailed() {
+		Queue::later(Carbon::now()->addMinutes(5), new \App\V1\Jobs\NotifyUnsubscribeable(new this));
 	}
 }

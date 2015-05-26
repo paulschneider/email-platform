@@ -1,7 +1,15 @@
 <?php
 
+function isProtected($listId) {
+	return in_array($listId, config('protectedlists')) ? true : false;
+}
+
 function getDateTime() {
 	return date('Y-m:d H:i:s');
+}
+
+function isApiResponse($data) {
+	return $data instanceOf Illuminate\Http\JsonResponse ? true : false;
 }
 
 function apiErrorResponse($response, $data = []) {

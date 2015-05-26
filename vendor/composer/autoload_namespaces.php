@@ -21,6 +21,7 @@ return array(
     'Rap2hpoutre\\LaravelLogViewer\\' => array($vendorDir . '/rap2hpoutre/laravel-log-viewer/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
+    'Mandrill' => array($vendorDir . '/mandrill/mandrill/src'),
     'Mailchimp' => array($vendorDir . '/mailchimp/mailchimp/src'),
     'Dotenv' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src'),

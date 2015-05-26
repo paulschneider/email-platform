@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a030032e1ef5983290a4d7055f4aa693",
+    "hash": "db8e11eab00f140dddb3f154fa8bdc5d",
     "packages": [
         {
             "name": "campaignmonitor/createsend-php",
@@ -1649,6 +1649,49 @@
                 "email"
             ],
             "time": "2014-10-30 20:38:12"
+        },
+        {
+            "name": "mandrill/mandrill",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/mailchimp/mandrill-api-php.git",
+                "reference": "9f336b08ea148c80db3b694f3dc737cd4f414e19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/mailchimp/mandrill-api-php/get/9f336b08ea148c80db3b694f3dc737cd4f414e19.zip",
+                "reference": "9f336b08ea148c80db3b694f3dc737cd4f414e19",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mandrill": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Mandrill Devs",
+                    "email": "community@mandrill.com",
+                    "homepage": "http://mandrill.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "API client library for the Mandrill email as a service platform",
+            "homepage": "https://bitbucket.org/mailchimp/mandrill-api-php",
+            "keywords": [
+                "api",
+                "email"
+            ],
+            "time": "2014-10-16 19:08:20"
         },
         {
             "name": "monolog/monolog",
@@ -3591,7 +3634,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mandrill/mandrill": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

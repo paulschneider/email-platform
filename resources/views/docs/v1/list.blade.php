@@ -5,15 +5,17 @@
 @section('content')
     <h3>Lists</h3>
     <ul>
-    	<li><a href="/v1/docs/list#get">Get a List</a></li>
+    	<li><a href="/v1/docs/list#get">Retrieve a specified List</a></li>
+        <li><a href="/v1/docs/list#get-all">Retrieve all Lists</a></li>
     	<li><a href="/v1/docs/list#create">Create a New List</a></li>
     	<li><a href="/v1/docs/list#add-fields">Add Fields to Existing List</a></li>
         <li><a href="/v1/docs/list#get-fields">Retrieve Fields from an Existing List</a></li>
+        <li><a href="/v1/docs/list#delete">Delete a List</a></li>
     </ul>
 
     <!-- GET A LIST -->
     <div id="get-a-list">
-        <h4><a name="get">Get a List</a></h4>
+        <h4><a name="get">Get a specified List</a></h4>
 
         <dl>
             <dt>Description</dt>
@@ -80,6 +82,71 @@
                 }
             </code>
         </pre>
+    </div>
+
+    <!-- GET A LIST OF LISTS -->
+    <div id="get-all">
+        <h4><a name="get">Retrieve all Lists</a></h4>
+
+        <dl>
+            <dt>Description</dt>
+                <dd>Retrieve a list of all lists created in the client.</dd>
+            <dt>Endpoint</dt>
+                <dd>/v1/list/all</dd>
+            <dt>Method</dt>
+                <dd>GET</dd>
+            <dt>Required Parameters</dt>
+                <dd>
+                    <ul>
+                        <li><strong>null</strong> <em>(no parameters are required.)</em></li>
+                    </ul>
+                </dd>
+            <dt>Response Types</dt>
+                <dd>JSON</dd>
+        </dl>
+
+        <h5>Example Request</h5>
+
+            <pre>
+                <code class="php">
+                    $apiClient = New ApiClient();
+                    <br />
+                    $response = $apiClient->get('/v1/list/all');
+                </code>
+            </pre>
+
+        <h5>Example Success Response</h5>
+
+            <pre>
+                <code class="php">
+                    {
+                        "success": {
+                            "message": "Success.",
+                            "statusCode": 200,
+                            "method": "GET",
+                            "endpoint": "/v1/list/all",
+                            "time": 1432306291,
+                            "data": {
+                                "count": 3,
+                                "lists": [
+                                    {
+                                        "ListID": "29bf3ed929dc3878aa6da9e2460bae3b",
+                                        "Name": "test23404302"
+                                    },
+                                    {
+                                        "ListID": "5483146cbb60790da13a9cfd56a97319",
+                                        "Name": "test23432432"
+                                    },
+                                    {
+                                        "ListID": "b25f04741a3837448843c54b8f41e1c7",
+                                        "Name": "test2344234"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                </code>
+            </pre>
     </div>
 
     <!-- CREATE A LIST -->
@@ -318,7 +385,7 @@
         </pre>
     </div>
 
-    <!-- ADD FIELDS TO A LIST -->
+    <!-- RETRIEVE FIELDS FROM A LIST -->
     <div id="get-fields">
         <h4><a name="get-fields">Retrieve Fields from an Existing List</a></h4>
 
@@ -422,6 +489,77 @@
                   "data": {
                     "errors": "Invalid ListID"
                   }
+                }
+            </code>
+        </pre>
+   </div>
+
+    <!-- DELETE A LIST -->
+    <div id="delete">
+        <h4><a name="get-fields">Delete a List</a></h4>
+
+        <dl>
+            <dt>Description</dt>
+                <dd>Delete a specified list from the client. Be aware that this is a destructive operation. Any users attached to the list will also be permanently removed.</dd>
+            <dt>Endpoint</dt>
+                <dd>list/{listId}</dd>
+            <dt>Method</dt>
+                <dd>DELETE</dd>
+            <dt>Required Parameters</dt>
+                <dd>
+                    <ul>
+                        <li><strong>listId</strong> (type = string) - Unique identifier for the list</li>
+                    </ul>
+                </dd>
+            <dt>Available Response Types</dt>
+                <dd>JSON</dd>
+        </dl>
+
+        <h5>Example Request</h5>
+
+        <pre>
+            <code class="php">
+                $apiClient = New ApiClient();
+                <br />
+                $response = $apiClient->delete('/v1/list/9ffe76564af6841272cafeeb3765759d');
+            </code>
+        </pre>
+
+        <h5>Example Success Response</h5>
+
+        <pre>
+            <code class="php">
+                {
+                    "success": {
+                        "message": "Success.",
+                        "statusCode": 200,
+                        "method": "DELETE",
+                        "endpoint": "/v1/list/29bf3ed929dc3878aa6da9e2460bae3b",
+                        "time": 1432307585,
+                        "data": {
+                            "response": "",
+                            "http_status_code": 200
+                        }
+                    }
+                }
+            </code>
+        </pre>
+
+        <h5>Example Failure Response</h5>
+
+        <pre>
+            <code class="php">
+                {
+                    "error": {
+                        "message": "The request could not be processed due to errors.",
+                        "statusCode": 422,
+                        "method": "DELETE",
+                        "endpoint": "/v1/list/29bf3ed929dc3878aa6da9e2460bae3b",
+                        "time": 1432307758
+                    },
+                    "data": {
+                        "errors": "Unknown list ID"
+                    }
                 }
             </code>
         </pre>

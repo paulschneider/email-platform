@@ -13,6 +13,36 @@ Class ListController extends Controller {
 	}
 
 	/**
+	 * retrieve a list of all existing lists
+	 * @return mixed
+	 */
+	public function getAll() {
+		return $this->mailer->getAllLists();
+	}
+
+	/**
+	 * delete a single or set of lists from the mail client
+	 * @return mixed
+	 */
+	public function deleteList($listId) {
+
+		# make sure supplied list ID is a valid list
+		if (!$this->mailer->isValidList($listId)) {
+			return apiErrorResponse('unprocessable', ['errors' => 'Unknown list ID']);
+		}
+
+		return $this->mailer->deleteList($listId);
+	}
+
+	/**
+	 * delete all lists from the client
+	 * @return mixed
+	 */
+	public function deleteAllLists() {
+		return $this->mailer->deleteAllLists();
+	}
+
+	/**
 	 * add an array of fields to a specified list
 	 */
 	public function addCustomFields() {
