@@ -25,11 +25,7 @@ Class UserController extends Controller {
 		# log the subscription request which we'll try and action later on
 		$response = $logger->log($userEmail, $userName, $fields, $listId);
 
-		//$logger = app('Psr\Log\LoggerInterface')->info("*** We returned a response from the API" . time() . "***");
-
-		return $response;
-
 		# try and register the users' answers to the provided list
-		//return $this->mailer->subscribe($listId, $userEmail, $userName, $fields);
+		return $this->mailer->subscribe($listId, $userEmail, $userName, $fields);
 	}
 }
