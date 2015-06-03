@@ -34,7 +34,7 @@ Class Lister extends Campaigner {
 	 */
 	public function __construct($monitor, $listId) {
 		$this->monitor = $monitor;
-		$this->auth = ['api_key' => getenv('CMAPIKEY')];
+		$this->auth = ['api_key' => $monitor->getApiKey()];
 
 		$this->list = New \CS_REST_Lists($listId, $this->auth);
 	}
@@ -70,7 +70,7 @@ Class Lister extends Campaigner {
 				if ($responseCode == 201) {
 					$results['created'][] = [
 						"fieldName" => $field,
-						"fieldTag" => $result->response,
+						"fieldTag" => stripbrackets($result->response),
 						"message" => "success",
 					];
 				} else {

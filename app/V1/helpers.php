@@ -1,5 +1,14 @@
 <?php
 
+function getClientIdentifier() {
+	return Request::header('ClientId') ? Request::header('ClientId') : getenv('CM_CLIENT_ID');
+}
+
+function stripbrackets($data) {
+	$str = str_replace("[", "", $data);
+	return str_replace("]", "", $str);
+}
+
 function isProtected($listId) {
 	return in_array($listId, config('protectedlists')) ? true : false;
 }

@@ -21,25 +21,38 @@ Class CampaignMonitor implements EmailerInterface {
 	protected $mailer;
 
 	/**
-	 * list identifiers protected from API request actions
-	 * @var array $protected
-	 */
-	protected $protected = [
-		"5d0f2b931098f3314d1488b871107316",
-	];
-
-	/**
 	 * [$clientId description]
 	 * @var [type]
 	 */
-	public $clientId = 'c209170c996ff9997059dc429c92f33e';
+	public $clientId;
+
+	/**
+	 * API key
+	 * @var string
+	 */
+	public $apiKey;
 
 	/**
 	 * Class constructor
 	 */
 	public function __construct() {
+
 		# define the base URL for the class
 		$this->baseUrl = getenv('CMAPIPATH');
+
+		# helpers.php function
+		$this->clientId = getClientIdentifier();
+
+		# retrieve and set the API API based on the clientId provided
+		$this->apiKey = config('apikeys')[$this->clientId];
+	}
+
+	/**
+	 * retrieve the API key for this client
+	 * @return string
+	 */
+	public function getApiKey() {
+		return $this->apiKey;
 	}
 
 	/**

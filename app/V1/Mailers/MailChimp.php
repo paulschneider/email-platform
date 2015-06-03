@@ -1,12 +1,9 @@
 <?php Namespace App\V1\Mailers;
 
-Use App\V1\Interfaces\EmailerInterface;
-Use Mailchimp AS Chimp;
-Use App\V1\Mailers\MailChimp\Lists AS SubscriberList;
-Use App\V1\Mailers\MailChimp\User AS UserMailer;
+use App\V1\Interfaces\EmailerInterface;
+use App\V1\Mailers\MailChimp\Lists AS SubscriberList;
 
-Class MailChimp implements EmailerInterface
-{	
+Class MailChimp implements EmailerInterface {
 	/**
 	 * the base URL to use for all MailChimp request
 	 * @var string baseUrl
@@ -22,8 +19,7 @@ Class MailChimp implements EmailerInterface
 	/**
 	 * Class constructor
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		# define the base URL for the class
 		$this->baseUrl = getenv('MCAPIKEY');
 
@@ -35,8 +31,7 @@ Class MailChimp implements EmailerInterface
 	 * return the base URL to use for this MailChimp integration
 	 * @return string baseUrl
 	 */
-	public function getBaseUrl()
-	{
+	public function getBaseUrl() {
 		return $this->baseUrl();
 	}
 
@@ -46,8 +41,7 @@ Class MailChimp implements EmailerInterface
 	 * @param  [type] $listName [description]
 	 * @return [type]           [description]
 	 */
-	public function subscribe($email, $listName, $formData = [])
-	{
+	public function subscribe($email, $listName, $formData = []) {
 		$user = New UserMailer($this->chimp);
 		return $user->subscribe($email, $listName, $formData);
 	}
@@ -55,8 +49,7 @@ Class MailChimp implements EmailerInterface
 	/**
 	 * add an array of form fields to a specified Mailchimp form
 	 */
-	public function addFieldsToList($listName, $fields = [])
-	{
+	public function addFieldsToList($listName, $fields = []) {
 		$lister = New SubscriberList($this->chimp);
 		return $lister->addListFields($listName, $fields);
 	}

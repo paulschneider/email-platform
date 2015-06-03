@@ -23,7 +23,7 @@ Class User extends Campaigner {
 	 */
 	public function __construct($monitor, $listId) {
 		$this->monitor = $monitor;
-		$this->auth = ['api_key' => getenv('CMAPIKEY')];
+		$this->auth = ['api_key' => $monitor->getApiKey()];
 
 		$this->subscriber = New \CS_REST_Subscribers($listId, $this->auth);
 	}

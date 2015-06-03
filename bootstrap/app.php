@@ -83,6 +83,7 @@ $app->bind('\App\V1\Interfaces\EmailerInterface', 'App\V1\Mailers\CampaignMonito
 # load the response codes config file
 $app->configure('responsecodes');
 $app->configure('protectedlists');
+$app->configure('apikeys');
 
 # register an event handler for the mail request event
 Event::listen('RequestWasLogged', '\App\V1\Events\RequestWasLogged@handle');
