@@ -15,8 +15,6 @@ Class CampaignMonitor implements EmailerInterface {
 	protected $baseUrl;
 
 	/**
-	 * Vendor\MailChimp\MailChimp\Src\Mailchimp
-	 * @var instance of the MailChimp API library class
 	 */
 	protected $mailer;
 
@@ -45,6 +43,14 @@ Class CampaignMonitor implements EmailerInterface {
 
 		# retrieve and set the API API based on the clientId provided
 		$this->apiKey = config('apikeys')[$this->clientId];
+	}
+
+	/**
+	 * retrieve this sessions client ID
+	 * @return string
+	 */
+	public function getClientId() {
+		return $this->clientId;
 	}
 
 	/**
@@ -209,7 +215,6 @@ Class CampaignMonitor implements EmailerInterface {
 	 */
 	public function deleteList($listId) {
 		$lister = New Lister($this, $listId);
-
 		$result = $lister->deleteList();
 
 		if (isProtected($listId)) {

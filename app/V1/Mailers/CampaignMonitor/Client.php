@@ -36,7 +36,7 @@ Class Client extends Campaigner {
 		$this->monitor = $monitor;
 		$this->auth = ['api_key' => $monitor->getApiKey()];
 
-		$this->client = New \CS_REST_Clients(getenv("CM_CLIENT_ID"), $this->auth);
+		$this->client = New \CS_REST_Clients($monitor->getClientId(), $this->auth);
 	}
 
 	/**
