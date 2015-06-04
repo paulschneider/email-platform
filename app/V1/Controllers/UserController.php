@@ -23,9 +23,6 @@ Class UserController extends Controller {
 		$fields = $_POST['fields'];
 
 		# log the subscription request which we'll try and action later on
-		$response = $logger->log($userEmail, $userName, $fields, $listId);
-
-		# try and register the users' answers to the provided list
-		return $this->mailer->subscribe($listId, $userEmail, $userName, $fields);
+		return $logger->log($userEmail, $userName, $fields, $listId, getClientIdentifier());
 	}
 }

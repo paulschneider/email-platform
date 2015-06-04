@@ -39,6 +39,10 @@ Class QueueRepository extends Db {
 				break;
 			}
 
+			# we can accept different clients into the API which would have been stored in the database
+			# when the request was first made
+			$this->mailer->setClientId($item->client_id);
+
 			# process the subscription request
 			$result = $this->mailer->processSubscribe(
 				$item->list_id,

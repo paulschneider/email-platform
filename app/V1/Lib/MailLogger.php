@@ -17,11 +17,13 @@ Class MailLogger {
 	 * @param  string $recipientName  the name of the recipient
 	 * @param  array $fields set of fields (answers) to assign to the user record
 	 * @param  string $listId unique identifier for the list
+	 * @param string $clientId unique identifier for the client making the request
 	 * @return null
 	 */
-	public function log($recipientEmail, $recipientName, $fields, $listId) {
+	public function log($recipientEmail, $recipientName, $fields, $listId, $clientId) {
 		$logged = $this->repo->store([
 			"list_id" => $listId,
+			"client_id" => $clientId,
 			"recipient_email" => $recipientEmail,
 			"recipient_name" => $recipientName,
 			"fields" => json_encode($fields),

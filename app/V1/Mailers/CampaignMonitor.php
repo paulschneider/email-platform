@@ -39,10 +39,7 @@ Class CampaignMonitor implements EmailerInterface {
 		$this->baseUrl = getenv('CMAPIPATH');
 
 		# helpers.php function
-		$this->clientId = getClientIdentifier();
-
-		# retrieve and set the API API based on the clientId provided
-		$this->apiKey = config('apikeys')[$this->clientId];
+		$this->clientId = $this->setClientId(getClientIdentifier());
 	}
 
 	/**
@@ -59,6 +56,17 @@ Class CampaignMonitor implements EmailerInterface {
 	 */
 	public function getApiKey() {
 		return $this->apiKey;
+	}
+
+	public function setClientId($clientId) {
+		$this->clientId = $clientId;
+
+		$this->setApiKey();
+	}
+
+	private function setApiKey() {
+		# retrieve and set the API API based on the clientId provided
+		$this->apiKey = config('apikeys')[$this->clientId];
 	}
 
 	/**
