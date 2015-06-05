@@ -59,6 +59,9 @@ Class QueueRepository extends Db {
 			else {
 				$this->unqueue($item->id);
 			}
+
+			# wait 5 seconds before we hit the CM API again or it'll fall over
+			sleep(5);
 		}
 	}
 
