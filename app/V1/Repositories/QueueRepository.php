@@ -75,7 +75,7 @@ Class QueueRepository extends Db {
 				$this->console->info("Successfully added to the email application. Removing from queue.");
 			}
 
-			$this->info("---------------------------------");
+			$this->console->info("---------------------------------");
 		}
 	}
 
