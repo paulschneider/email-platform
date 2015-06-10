@@ -21,4 +21,16 @@ Class VerificationRepository extends Db {
 		}
 		return false;
 	}
+
+	/**
+	 * check to see whether there are records in the request store (table)
+	 * @return boolean whether there are records remaining to process
+	 */
+	public function hasMoreToProcess() {
+		if (DB::table($this->table)->count() > 0) {
+			return true;
+		}
+
+		return false;
+	}
 }
