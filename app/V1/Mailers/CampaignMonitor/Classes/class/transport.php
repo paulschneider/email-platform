@@ -8,7 +8,7 @@ if (false === defined('CS_REST_SOCKET_TIMEOUT')) {
 	define('CS_REST_SOCKET_TIMEOUT', 10);
 }
 if (false === defined('CS_REST_CALL_TIMEOUT')) {
-	define('CS_REST_CALL_TIMEOUT', 30);
+	define('CS_REST_CALL_TIMEOUT', 120);
 }
 
 function CS_REST_TRANSPORT_get_available($requires_ssl, $log) {
