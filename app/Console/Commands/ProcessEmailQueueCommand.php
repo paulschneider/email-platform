@@ -56,8 +56,6 @@ Class ProcessEmailQueueCommand extends Command {
 	public function __construct(\App\V1\Interfaces\EmailerInterface $mailer) {
 		parent::__construct();
 
-		$mailer->setClientId("c209170c996ff9997059dc429c92f33e");
-
 		$this->verificationRepo = New VerificationRepository();
 		$this->queueRepo = New QueueRepository($mailer);
 	}

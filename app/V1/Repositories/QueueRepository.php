@@ -40,13 +40,9 @@ Class QueueRepository extends Db {
 
 		$this->console = $console;
 
-		$queue = DB::table($this->table)->select("*")->limit(1000)->get();
+		$queue = DB::table($this->table)->select("*")->where('failed_all_attempts', null)->limit(1000)->get();
 
 		foreach ($queue AS $item) {
-
-			if (!empty($item->failed_all_attempts)) {
-				break;
-			}
 
 			# we can accept different clients into the API which would have been stored in the database
 			# when the request was first made
