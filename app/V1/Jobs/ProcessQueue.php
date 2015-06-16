@@ -9,6 +9,6 @@ class ProcessQueue implements SelfHandling, ShouldBeQueued {
 	use InteractsWithQueue, SerializesModels;
 
 	public function handle(\App\V1\Repositories\QueueRepository $queue) {
-		$queue->process(new App\Console\Commands\ProcessEmailQueueCommand);
+		$queue->process(new \App\Console\Commands\ProcessEmailQueueCommand);
 	}
 }
