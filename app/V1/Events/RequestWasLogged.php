@@ -9,7 +9,7 @@ Class RequestWasLogged implements ShouldBeQueued {
 	use \Illuminate\Queue\InteractsWithQueue;
 
 	public function handle() {
-		$date = Carbon::now()->addMinutes(5);
+		$date = Carbon::now()->addSeconds(30);
 		Queue::later($date, new \App\V1\Jobs\ProcessQueue(new \App\V1\Repositories\QueueRepository));
 	}
 }

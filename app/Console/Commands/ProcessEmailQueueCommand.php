@@ -70,7 +70,7 @@ Class ProcessEmailQueueCommand extends Command {
 			$this->info("---------------------------------");
 			$this->info("There are rows to process");
 
-			$this->queueRepo->process($this);
+			$this->queueRepo->process();
 		}
 	}
 }

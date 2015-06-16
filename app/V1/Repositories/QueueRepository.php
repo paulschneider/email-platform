@@ -36,9 +36,7 @@ Class QueueRepository extends Db {
 	 * @param  $mailer the mailer class to use to subscribe the records
 	 * @return null
 	 */
-	public function process(\App\Console\Commands\ProcessEmailQueueCommand $console) {
-
-		$this->console = $console;
+	public function process() {
 
 		$queue = DB::table($this->table)->select("*")->where('failed_all_attempts', null)->limit(1000)->get();
 
@@ -56,22 +54,14 @@ Class QueueRepository extends Db {
 				(array) json_decode($item->fields)
 			);
 
-			$this->console->info("Processing responses for user: " . $item->recipient_name);
-
 			# if it was unsuccessful re-add it to the queue
 			if (!$result) {
 				$this->retry($item);
-
-				$this->console->info("Response failed to submit to the email application.");
 			}
 			# otherwise remove it from the queue
 			else {
 				$this->unqueue($item->id);
-
-				$this->console->info("Successfully added to the email application. Removing from queue.");
 			}
-
-			$this->console->info("---------------------------------");
 		}
 	}
 
@@ -136,6 +126,5 @@ Class QueueRepository extends Db {
 	 */
 	private function notifyAllFailed() {
 		Queue::later(Carbon::now()->addMinutes(5), new \App\V1\Jobs\NotifyUnsubscribeable(new this));
-		$this->console->error("Notifying all attempts failed.");
 	}
 }

@@ -8,8 +8,7 @@ use Illuminate\Queue\SerializesModels;
 class ProcessQueue implements SelfHandling, ShouldBeQueued {
 	use InteractsWithQueue, SerializesModels;
 
-	public function handle(\App\V1\Repositories\QueueRepository $queue, \App\V1\Interfaces\EmailerInterface $mailer) {
-		$console = New \App\Console\Commands\ProcessEmailQueueCommand($mailer);
-		$queue->process(console);
+	public function handle(\App\V1\Repositories\QueueRepository $queue) {
+		$queue->process();
 	}
 }
