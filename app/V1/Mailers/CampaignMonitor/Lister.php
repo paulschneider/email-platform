@@ -144,4 +144,12 @@ Class Lister extends Campaigner {
 	public function updateList($data) {
 		return $this->list->update($data);
 	}
+
+	/**
+	 * [updateFields description]
+	 * @return [type] [description]
+	 */
+	public function updateFields($fieldKey, $fieldData) {
+		return $this->list->update_custom_field($fieldKey, $fieldData);
+	}
 }

@@ -278,7 +278,7 @@ Class CampaignMonitor implements EmailerInterface {
 	/**
 	 * Update the details of a list with supplied data
 	 * @param  array  $updates the details
-	 * @return API response
+	 * @return App\V1\Lib\ApiResponder
 	 */
 	public function updateList(array $data) {
 
@@ -302,5 +302,50 @@ Class CampaignMonitor implements EmailerInterface {
 		}
 
 		return apiErrorResponse('badRequest', ['errors' => $response->response->Message]);
+	}
+
+	/**
+	 * update an array of fields with new label values
+	 * @param array $data fields to update
+	 * @return App\V1\Lib\ApiResponder
+	 */
+	public function updateFields($data) {
+		if (!is_array($data) or !isset($data['listId']) or !isset($data['fields'])) {
+			return apiErrorResponse('failedDependency', []);
+		}
+
+		$listId = $data['listId'];
+		$fields = $data['fields'];
+
+		$lister = New Lister($this, $listId);
+
+		$updated = [];
+		$failed = [];
+
+		foreach ($fields AS $k => $field) {
+
+			$response = $lister->updateFields($k, [
+				'FieldName' => $field,
+				'VisibleInPreferenceCenter' => true, // whether this field will be show in the Campaign Monitor UI.
+			]);
+
+			# if the update of the field succeeded, sent the relevant data back
+			if ($response->http_status_code == 200) {
+				$updated[] = [
+					"oldLabel" => $k,
+					"newLabel" => $response->response,
+				];
+			}
+			# otherwise we'll let the caller know which ones failed so they can try again
+			else {
+				$failed[] = [
+					"oldLabel" => $k,
+					"reason" => "Unknown or invalid key supplied.",
+					"code" => $response->response->Code,
+				];
+			}
+		}
+
+		return apiSuccessResponse('ok', ["succeeded" => $updated, "failed" => $failed]);
 	}
 }

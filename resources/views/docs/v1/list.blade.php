@@ -50,6 +50,9 @@
             <tr>
                 <td><a href="/v1/docs/list#update-title">Update a list name</a></td>
             </tr>
+            <tr>
+                <td><a href="/v1/docs/list#update-fields">Update the field labels of a list</a></td>
+            </tr>
         </tbody>
     </table>
 
@@ -549,7 +552,7 @@
         </pre>
    </div>
 
-   <!-- DELETE A LIST -->
+   <!-- UPDATE A LIST TITLE -->
     <div id="update">
         <h4><a name="update-title">Update a List Title</a></h4>
 
@@ -618,6 +621,114 @@
                     },
                     "data": {
                         "errors": "Failed to deserialize your request. Please check the documentation and try again.Fields in error: list"
+                    }
+                }
+            </code>
+        </pre>
+   </div>
+
+   <div id="update-fields">
+        <h4><a name="update-fields">Update the field labels of a list</a></h4>
+
+        <dl>
+            <dt>Description</dt>
+                <dd>Update one or more field labels of an existing list.</dd>
+            <dt>Endpoint</dt>
+                <dd>update-fields</dd>
+            <dt>Method</dt>
+                <dd>PUT</dd>
+            <dt>Required Parameters</dt>
+                <dd>
+                    <ul>
+                        <li><strong>listId</strong> (type = string) - Unique identifier for the list</li>
+                        <li><strong>fields</strong> (type = array) - An array of field names to update. This array needs to provide an existing field key as the array index and the new value as the corresponding array item.</li>
+                    </ul>
+                </dd>
+            <dt>Available Response Types</dt>
+                <dd>JSON</dd>
+        </dl>
+
+        <h5>Example Request</h5>
+
+        <pre>
+            <code class="php">
+                $apiClient = New ApiClient();
+                <br />
+                $response = $apiClient->put('/v1/list/update-fields', [
+                    "listId" => "9f6c73e895e8447ca31f3af97d85c1b7",
+                    "fields" => [
+                        "UpdatedFieldlabel" => "Updated Field label",
+                        "4_4_email" => "Email address home",
+                        "4_5_favFood" => "Food preference",
+                    ],
+                ]);
+            </code>
+        </pre>
+
+        <h5>Example Success Response</h5>
+
+        <pre>
+            <code class="JSON">
+                {
+                    "success": {
+                        "message": "Success.",
+                        "statusCode": 200,
+                        "method": "PUT",
+                        "endpoint": "/v1/list/update-fields",
+                        "time": 1438340133,
+                        "data": {
+                            "succeeded": [
+                                {
+                                    "oldLabel": "UpdatedFieldlabel",
+                                    "newLabel": "[UpdatedFieldlabel]"
+                                },
+                                {
+                                    "oldLabel": "4_4_email",
+                                    "newLabel": "[Emailaddresshome]"
+                                },
+                                {
+                                    "oldLabel": "4_5_favFood",
+                                    "newLabel": "[Foodpreference]"
+                                }
+                            ],
+                            "failed": []
+                        }
+                    }
+                }
+            </code>
+        </pre>
+
+        <h5>Example Failure Response</h5>
+
+        <pre>
+            <code class="JSON">
+                {
+                    "success": {
+                        "message": "Success.",
+                        "statusCode": 200,
+                        "method": "PUT",
+                        "endpoint": "\\/v1\\/list\\/update-fields",
+                        "time": 1438340589,
+                        "data": {
+                            "succeeded": [],
+                            "failed": [
+                                {
+                                    "oldLabel": "UpdatedFieldlabel",
+                                    "reason": "Unknown or invalid key supplied.",
+                                    "code": 253
+                                },
+                                {
+                                    "oldLabel": "4_4_email",
+                                    "reason": "Unknown or invalid key supplied.",
+                                    "code": 253
+                                },
+                                {
+                                    "oldLabel": "4_5_favFood",
+                                    "reason": "Unknown or invalid key supplied.",
+                                    "code": 253
+                                }
+                            ]
+                        }
                     }
                 }
             </code>

@@ -105,7 +105,29 @@ Class ListController extends Controller {
 		]);
 	}
 
+	/**
+	 * request an update of a list name be made via the API
+	 * @return mixed
+	 */
 	public function updateList() {
 		return $this->mailer->updateList($_POST);
+	}
+
+	/**
+	 * Update a list of field names to the supplied values
+	 * @return mixed
+	 */
+	public function updateCustomField() {
+
+		$data = [
+			"listId" => "9f6c73e895e8447ca31f3af97d85c1b7",
+			"fields" => [
+				"UpdatedFieldlabel" => "Updated Field label",
+				"4_4_email" => "Email address home",
+				"4_5_favFood" => "Food preference",
+			],
+		];
+
+		return $this->mailer->updateFields($data);
 	}
 }
