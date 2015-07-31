@@ -3,6 +3,7 @@
 use Illuminate\Http\Response;
 
 Class ListController extends Controller {
+
 	/**
 	 * [getList description]
 	 * @param  [type] $listId [description]
@@ -102,5 +103,9 @@ Class ListController extends Controller {
 			'furtherResponseCode' => $result->response->Code,
 			'furtherResponseMsg' => $result->response->Message,
 		]);
+	}
+
+	public function updateList() {
+		return $this->mailer->updateList($_POST);
 	}
 }

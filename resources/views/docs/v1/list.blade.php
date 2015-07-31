@@ -4,14 +4,69 @@
 
 @section('content')
     <h3>Lists</h3>
-    <ul>
-    	<li><a href="/v1/docs/list#get">Retrieve a specified List</a></li>
-        <li><a href="/v1/docs/list#get-all">Retrieve all Lists</a></li>
-    	<li><a href="/v1/docs/list#create">Create a New List</a></li>
-    	<li><a href="/v1/docs/list#add-fields">Add Fields to Existing List</a></li>
-        <li><a href="/v1/docs/list#get-fields">Retrieve Fields from an Existing List</a></li>
-        <li><a href="/v1/docs/list#delete">Delete a List</a></li>
-    </ul>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>GET</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="/v1/docs/list#get">Retrieve a specified List</a></td>
+            </tr>
+            <tr>
+                <td><a href="/v1/docs/list#get-all">Retrieve all Lists</a></td>
+            </tr>
+            <tr>
+                <td><a href="/v1/docs/list#get-fields">Retrieve Fields from an Existing List</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>POST</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="/v1/docs/list#create">Create a New List</a></td>
+            </tr>
+            <tr>
+                <td><a href="/v1/docs/list#add-fields">Add Fields to Existing List</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>PUT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="/v1/docs/list#update-title">Update a list name</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>DELETE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="/v1/docs/list#delete">Delete a List</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr />
 
     <!-- GET A LIST -->
     <div id="get-a-list">
@@ -494,7 +549,82 @@
         </pre>
    </div>
 
-    <!-- DELETE A LIST -->
+   <!-- DELETE A LIST -->
+    <div id="update">
+        <h4><a name="update-title">Update a List Title</a></h4>
+
+        <dl>
+            <dt>Description</dt>
+                <dd>Update the title of a list from its current value to the supplied one</dd>
+            <dt>Endpoint</dt>
+                <dd>list/update</dd>
+            <dt>Method</dt>
+                <dd>PUT</dd>
+            <dt>Required Parameters</dt>
+                <dd>
+                    <ul>
+                        <li><strong>listId</strong> (type = string) - Unique identifier for the list</li>
+                        <li><strong>listName</strong> (type = string) - The new list name to update to</li>
+                    </ul>
+                </dd>
+            <dt>Available Response Types</dt>
+                <dd>JSON</dd>
+        </dl>
+
+        <h5>Example Request</h5>
+
+        <pre>
+            <code class="php">
+                $apiClient = New ApiClient();
+                <br />
+                $response = $apiClient->put('/v1/list/update', [
+                    "listId" => "9f6c73e895e8447ca31f3af97d85c1b7",
+                    "listName" => "A new list name",
+                ]);
+            </code>
+        </pre>
+
+        <h5>Example Success Response</h5>
+
+        <pre>
+            <code class="JSON">
+                {
+                    "success": {
+                        "message": "Success.",
+                        "statusCode": 200,
+                        "method": "PUT",
+                        "endpoint": "/v1/list/update",
+                        "time": 1438337078,
+                        "data": {
+                            "response": "",
+                            "http_status_code": 200
+                        }
+                    }
+                }
+            </code>
+        </pre>
+
+        <h5>Example Failure Response</h5>
+
+        <pre>
+            <code class="JSON">
+                {
+                    "error": {
+                        "message": "Invalid request. Please refer to the documentation for the use of this endpoint.",
+                        "statusCode": 400,
+                        "method": "PUT",
+                        "endpoint": "/v1/list/update",
+                        "time": 1438334172
+                    },
+                    "data": {
+                        "errors": "Failed to deserialize your request. Please check the documentation and try again.Fields in error: list"
+                    }
+                }
+            </code>
+        </pre>
+   </div>
+
+   <!-- DELETE A LIST -->
     <div id="delete">
         <h4><a name="get-fields">Delete a List</a></h4>
 

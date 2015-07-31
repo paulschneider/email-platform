@@ -30,6 +30,15 @@ Class CampaignMonitor implements EmailerInterface {
 	 */
 	public $apiKey;
 
+	protected $coreValues = [
+		"UnsubscribePage" => "http://www.example.com/unsubscribed.html",
+		"UnsubscribeSetting" => "OnlyThisList",
+		"ConfirmedOptIn" => false,
+		"ConfirmationSuccessPage" => "http://www.example.com/joined.html",
+		"AddUnsubscribesToSuppList" => true,
+		"ScrubActiveWithSuppList" => true,
+	];
+
 	/**
 	 * Class constructor
 	 */
@@ -58,14 +67,24 @@ Class CampaignMonitor implements EmailerInterface {
 		return $this->apiKey;
 	}
 
+	/**
+	 * [setClientId description]
+	 * @param [type] $clientId [description]
+	 */
 	public function setClientId($clientId) {
 		$this->clientId = $clientId;
 
 		$this->setApiKey();
+
+		return $this->clientId;
 	}
 
+	/**
+	 * [setApiKey description]
+	 */
 	private function setApiKey() {
 		# retrieve and set the API API based on the clientId provided
+
 		$this->apiKey = config('apikeys')[$this->clientId];
 	}
 
@@ -132,10 +151,7 @@ Class CampaignMonitor implements EmailerInterface {
 
 		$params = [
 			"Title" => $listName,
-			"UnsubscribePage" => "http://www.example.com/unsubscribed.html",
-			"UnsubscribeSetting" => "OnlyThisList",
-			"ConfirmedOptIn" => false,
-			"ConfirmationSuccessPage" => "http://www.example.com/joined.html",
+			$this->coreValues,
 		];
 
 		return $lister->create($params, $this->clientId);
@@ -257,5 +273,34 @@ Class CampaignMonitor implements EmailerInterface {
 		}
 
 		return apiSuccessResponse('ok', ["listsDeleted" => $counter]);
+	}
+
+	/**
+	 * Update the details of a list with supplied data
+	 * @param  array  $updates the details
+	 * @return API response
+	 */
+	public function updateList(array $data) {
+
+		if (!is_array($data) or !isset($data["listId"]) or !isset($data["listName"])) {
+			return apiErrorResponse('failedDependency', []);
+		}
+
+		$lister = New Lister($this, $data["listId"]);
+
+		# create the basic array needed by the campaign monitor API
+		$listData = ["Title" => $data["listName"]];
+
+		# add in the default values for new lists as required by the CM API
+		$core = array_merge($listData, $this->coreValues);
+
+		# send it
+		$response = $lister->updateList($core);
+
+		if ($response->http_status_code == 200) {
+			return apiSuccessResponse('ok', $response);
+		}
+
+		return apiErrorResponse('badRequest', ['errors' => $response->response->Message]);
 	}
 }

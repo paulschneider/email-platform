@@ -7,9 +7,10 @@ h2, h3, h4, h5, h6 {
     width: 100%;
     padding-bottom:5px;
     border-bottom:1px solid #000;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     font-size:1.3em;
 }
+
 dl {
     width: 100%;
     float: left;
@@ -43,4 +44,12 @@ dd li {
 
 span.define {
     color:#A8A8A8;
+}
+
+table.table {
+    margin-bottom: 25px;
+}
+
+pre {
+    margin-bottom: 50px;
 }

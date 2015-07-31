@@ -136,4 +136,12 @@ Class Lister extends Campaigner {
 	public function deleteList() {
 		return $this->list->delete();
 	}
+
+	/**
+	 * update the title of a list on Campaign Monitor
+	 * @return HTTP response
+	 */
+	public function updateList($data) {
+		return $this->list->update($data);
+	}
 }
