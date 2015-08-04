@@ -118,16 +118,6 @@ Class ListController extends Controller {
 	 * @return mixed
 	 */
 	public function updateCustomField() {
-
-		$data = [
-			"listId" => "9f6c73e895e8447ca31f3af97d85c1b7",
-			"fields" => [
-				"UpdatedFieldlabel" => "Updated Field label",
-				"4_4_email" => "Email address home",
-				"4_5_favFood" => "Food preference",
-			],
-		];
-
-		return $this->mailer->updateFields($data);
+		return $this->mailer->updateFields($_POST);
 	}
 }
