@@ -324,7 +324,7 @@ Class CampaignMonitor implements EmailerInterface {
 
 		foreach ($fields AS $k => $field) {
 
-			$response = $lister->updateFields($k, [
+			$response = $lister->updateFields("[" . $k . "]", [
 				'FieldName' => $field,
 				'VisibleInPreferenceCenter' => true, // whether this field will be show in the Campaign Monitor UI.
 			]);

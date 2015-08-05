@@ -146,8 +146,9 @@ Class Lister extends Campaigner {
 	}
 
 	/**
-	 * [updateFields description]
-	 * @return [type] [description]
+	 * update a field with the given fieldKey to a new label value. The new label will be turned into
+	 * the new field key, returned as part of the API response.
+	 * @return JSON response
 	 */
 	public function updateFields($fieldKey, $fieldData) {
 		return $this->list->update_custom_field($fieldKey, $fieldData);

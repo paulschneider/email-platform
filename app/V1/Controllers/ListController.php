@@ -107,17 +107,19 @@ Class ListController extends Controller {
 
 	/**
 	 * request an update of a list name be made via the API
+	 * this requires a PUT request hence the use of $_REQUEST
 	 * @return mixed
 	 */
 	public function updateList() {
-		return $this->mailer->updateList($_POST);
+		return $this->mailer->updateList($_REQUEST);
 	}
 
 	/**
 	 * Update a list of field names to the supplied values
+	 * this requires a PUT request hence the use of $_REQUEST
 	 * @return mixed
 	 */
 	public function updateCustomField() {
-		return $this->mailer->updateFields($_POST);
+		return $this->mailer->updateFields($_REQUEST);
 	}
 }

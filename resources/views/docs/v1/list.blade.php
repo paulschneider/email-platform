@@ -131,7 +131,7 @@
                     "message": "The requested content item or resource could not be found.",
                     "statusCode": 404,
                     "method": "GET",
-                    "endpoint": "\/v1\/list\/find\/9ffe76564af6841272cafeeb3765759d",
+                    "endpoint": "/v1/list/find/9ffe76564af6841272cafeeb3765759d",
                     "time": 1431424243
                   },
                   "data": {
@@ -707,7 +707,7 @@
                         "message": "Success.",
                         "statusCode": 200,
                         "method": "PUT",
-                        "endpoint": "\\/v1\\/list\\/update-fields",
+                        "endpoint": "/v1/list/update-fields",
                         "time": 1438340589,
                         "data": {
                             "succeeded": [],
