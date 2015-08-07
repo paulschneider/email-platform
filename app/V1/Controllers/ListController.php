@@ -1,5 +1,6 @@
 <?php namespace App\V1\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 Class ListController extends Controller {
@@ -110,8 +111,8 @@ Class ListController extends Controller {
 	 * this requires a PUT request hence the use of $_REQUEST
 	 * @return mixed
 	 */
-	public function updateList() {
-		return $this->mailer->updateList($_REQUEST);
+	public function updateList(Request $request) {
+		return $this->mailer->updateList($request->all());
 	}
 
 	/**
@@ -119,7 +120,7 @@ Class ListController extends Controller {
 	 * this requires a PUT request hence the use of $_REQUEST
 	 * @return mixed
 	 */
-	public function updateCustomField() {
-		return $this->mailer->updateFields($_REQUEST);
+	public function updateCustomField(Request $request) {
+		return $this->mailer->updateFields($request->all());
 	}
 }
