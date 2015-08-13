@@ -333,7 +333,7 @@ Class CampaignMonitor implements EmailerInterface {
 			if ($response->http_status_code == 200) {
 				$updated[] = [
 					"oldLabel" => $k,
-					"newLabel" => $response->response,
+					"newLabel" => stripbrackets($response->response),
 				];
 			}
 			# otherwise we'll let the caller know which ones failed so they can try again
